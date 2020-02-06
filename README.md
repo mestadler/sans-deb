@@ -11,8 +11,7 @@ $ fpm -s dir -t deb -C /home/martin/Develop/FPM/public-sans/opentype --name publ
 
 ### first update the sources for the backports
 
-```vi the  /etc/apt/sources.list and add the following entry
-```
+vi the  /etc/apt/sources.list and add the following entry
 
 deb http://ftp.debian.org/debian buster-backports main
 deb-src http://ftp.debian.org/debian buster-backports main
