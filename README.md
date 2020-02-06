@@ -9,15 +9,17 @@ $ fpm -s dir -t deb -C /home/martin/Develop/FPM/public-sans/opentype --name publ
 
 ## backports for debian 10
 
-'''vi the  /etc/apt/sources.list and add the following entry
-'''
+### first update the sources for the backports
+
+```vi the  /etc/apt/sources.list and add the following entry
+```
 
 deb http://ftp.debian.org/debian buster-backports main
 deb-src http://ftp.debian.org/debian buster-backports main
 
-Next complete an apt update and then an upgrade
+### Next complete an apt update and then an upgrade
   
-  '''sudo apt update
+  ```sudo apt update
   sudo apt -t buster-backports upgrade
   sudo apt autoremove
-  '''
+  ```
