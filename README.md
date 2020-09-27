@@ -23,9 +23,13 @@ deb-src http://ftp.debian.org/debian buster-backports main
   sudo apt autoremove
   ```
 ## to always use backports
+
 root@kona:/etc/apt# vi preferences
 root@kona:/etc/apt# cat preferences
 
+```
 Package: *
 Pin: release a=<release>-backports
 Pin-Priority: 501
+
+```
