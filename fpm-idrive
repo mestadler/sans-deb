@@ -1,0 +1,1 @@
+fpm -s dir -t deb -C /home/martin/bitbucket/Devops/fpm/IDriveForLinux/ --name idriveforlinux --version 0.0.1 --iteration 1 -m martin@sansnom.co.uk --description "idrive-cli for linux" --prefix /usr/local/idrive --url "www.sansnom.co.uk" --deb-no-default-config-files
