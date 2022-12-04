@@ -1,0 +1,1 @@
+fpm -t deb -s tar  --name public-sans  --version 0.0.2 --iteration 3 -m martin@sansnom.co.uk --description "public sans font" --prefix /usr/share/fonts/opentype/public --license 'open'  --url "www.sansnom.io" --deb-no-default-config-files tmp/public-sans.tar
