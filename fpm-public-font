@@ -1,9 +1,9 @@
 fpm -s dir -t deb  -C . \
-> --name public-sans-sansnom \
-> --version 0.0.2 --iteration 3 \
-> -m martin@sansnom.co.uk \
-> --description "public sans font" \
-> --prefix /usr/share/fonts/opentype/public \
-> --license 'open'  \
-> --url "www.sansnom.io" \
-> --deb-no-default-config-files
+--name public-sans-sansnom \
+--version 0.0.2 --iteration 3 \
+-m martin@sansnom.co.uk \
+--description "public sans font" \
+--prefix /usr/share/fonts/opentype/public \
+--license 'open'  \
+--url "www.sansnom.io" \
+--deb-no-default-config-files
