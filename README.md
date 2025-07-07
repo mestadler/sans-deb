@@ -1,7 +1,3 @@
-Here’s a cleaned-up version of your Markdown, with consistent spacing, formatting, and proper Markdown conventions (e.g. code blocks, section spacing, and headers):
-
----
-
 # Packaging with `fpm` and Scanning with `Trivy`
 
 This guide provides a step-by-step workflow on how to package binaries into `.deb` and `.rpm` formats using [`fpm`](https://fpm.readthedocs.io/), and how to scan the artifacts for vulnerabilities using [`Trivy`](https://aquasecurity.github.io/trivy/).
