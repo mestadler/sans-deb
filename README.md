@@ -141,11 +141,100 @@ trivy fs <package-name>-<version>-<build-number>.<architecture>.rpm
 After running these checks, your packages should be ready for distribution.
 
 ---
+Here’s a GitHub Actions workflow that:
 
-## 7. License
-
-This project is licensed under the MIT License – see the `LICENSE` file for details.
+1. Installs dependencies (`Ruby`, `fpm`, and `Trivy`)
+2. Packages your binaries into `.deb` and `.rpm` formats
+3. Scans the output artifacts with Trivy
+4. Uploads the results as GitHub Actions artifacts
 
 ---
 
-Let me know if you'd like to add example outputs or CI/CD integration steps.
+### 📄 `.github/workflows/package-and-scan.yml`
+
+```yaml
+name: Package and Scan Binaries
+
+on:
+  push:
+    paths:
+      - 'my-app-binaries/**'
+      - '.github/workflows/package-and-scan.yml'
+    branches:
+      - main
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    env:
+      PACKAGE_NAME: my-app
+      VERSION: 1.0.0
+      BUILD_NUMBER: 1
+      ARCH: amd64
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby and install fpm
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby ruby-dev build-essential rpm
+          sudo gem install --no-document fpm
+
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Create .deb package
+        run: |
+          fpm -s dir -t deb \
+              -n "$PACKAGE_NAME" \
+              -v "$VERSION" \
+              --iteration "$BUILD_NUMBER" \
+              --architecture "$ARCH" \
+              --description "Example package created via GitHub Actions." \
+              --prefix /usr/local/bin \
+              my-app-binaries/
+
+      - name: Create .rpm package
+        run: |
+          fpm -s dir -t rpm \
+              -n "$PACKAGE_NAME" \
+              -v "$VERSION" \
+              --iteration "$BUILD_NUMBER" \
+              --architecture "$ARCH" \
+              --description "Example package created via GitHub Actions." \
+              --prefix /usr/local/bin \
+              my-app-binaries/
+
+      - name: Scan .deb package with Trivy
+        run: |
+          trivy fs "${PACKAGE_NAME}_${VERSION}-${BUILD_NUMBER}_${ARCH}.deb"
+
+      - name: Scan .rpm package with Trivy
+        run: |
+          trivy fs "${PACKAGE_NAME}-${VERSION}-${BUILD_NUMBER}.${ARCH}.rpm"
+
+      - name: Upload .deb and .rpm packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-artifacts
+          path: |
+            *.deb
+            *.rpm
+```
+
+---
+
+### 📌 Notes:
+
+* Replace `my-app-binaries/` with the correct path to your binary folder if different.
+* You can parameterise the `VERSION`, `PACKAGE_NAME`, etc., via a file or input later.
+* The workflow assumes your binaries are ready and don't need to be built from source.
+
+
+---
+
+
